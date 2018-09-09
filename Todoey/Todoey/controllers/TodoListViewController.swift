@@ -7,27 +7,20 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
-    var itemArray = [ItemModel]()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var itemArray = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier:"ToDoItemCell")
         
-        let newItem1 = ItemModel()
-        newItem1.title = "Find Mike"
-        itemArray.append(newItem1)
+        loadItems()
         
-        let newItem2 = ItemModel()
-        newItem2.title = "Eat Eggos"
-        itemArray.append(newItem2)
-        
-        let newItem3 = ItemModel()
-        newItem3.title = "Destroy demogorgon"
-        itemArray.append(newItem3)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,7 +45,7 @@ class TodoListViewController: UITableViewController {
         
         itemArray[indexPath.row].done =  !itemArray[indexPath.row].done
         
-        tableView.reloadData()
+        saveItems()
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -64,15 +57,15 @@ class TodoListViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add new Item", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add", style: .default) {
-            (action) in
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            let addedItem = ItemModel()
+            let addedItem = Item(context: self.context)
             addedItem.title = addNewItemTextField.text ?? ""
+            addedItem.done = false
             
             self.itemArray.append(addedItem)
             
-            self.tableView.reloadData()
+            self.saveItems()
         }
         
         alert.addTextField { (alertTextField) in
@@ -84,5 +77,22 @@ class TodoListViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func saveItems() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context")
+        }
+        self.tableView.reloadData()
+    }
+    
+    func loadItems() {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            itemArray = try context.fetch(request)
+            } catch {
+            print("Failed!")
+        }
+    }
 }
-
