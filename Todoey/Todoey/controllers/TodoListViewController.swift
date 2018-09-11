@@ -53,24 +53,27 @@ class TodoListViewController: UITableViewController {
 
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         
-        var addNewItemTextField = UITextField()
-        
         let alert = UIAlertController(title: "Add new Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
-            let addedItem = Item(context: self.context)
-            addedItem.title = addNewItemTextField.text ?? ""
-            addedItem.done = false
+        let newItem = Item(context: self.context)
             
-            self.itemArray.append(addedItem)
+        guard let textField = alert.textFields?.first,
+            let newItemTitle = textField.text else {
+                return
+            }
+            
+            newItem.title = newItemTitle
+            newItem.done = false
+            
+            self.itemArray.append(newItem)
             
             self.saveItems()
         }
         
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item"
-            addNewItemTextField = alertTextField
         }
         
         alert.addAction(action)
