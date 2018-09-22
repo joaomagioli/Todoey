@@ -23,6 +23,7 @@ class TodoListViewController: UITableViewController {
         
     }
     
+    // MARK: - TableView datasource methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
@@ -51,6 +52,7 @@ class TodoListViewController: UITableViewController {
         
     }
 
+    // MARK: - Add new Item
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "Add new Item", message: "", preferredStyle: .alert)
@@ -81,6 +83,8 @@ class TodoListViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Tableview data manipulation methods
+    
     func saveItems() {
         do {
             try context.save()
@@ -102,6 +106,7 @@ class TodoListViewController: UITableViewController {
     }
 }
 
+// MARK: - Extension of TodoListViewController class
 extension TodoListViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
