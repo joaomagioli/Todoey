@@ -55,7 +55,7 @@ class TodoListViewController: SwipeTableViewController {
             }
             
         } else {
-            cell.textLabel?.text = "No items added"
+            cell.textLabel?.text = Constants.TodoList.noItemsAdded
         }
         
         return cell
@@ -82,9 +82,9 @@ class TodoListViewController: SwipeTableViewController {
     // MARK: - Add new Item
     @IBAction func addNewItem(_ sender: UIBarButtonItem) {
         
-        let alert = UIAlertController(title: "Add new Item", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: Constants.TodoList.addNewItem, message: Constants.emptyMessage, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+        let action = UIAlertAction(title: Constants.add, style: .default) { (action) in
             
             if let currentCategory = self.selectedCategory {
                 do {
@@ -107,7 +107,7 @@ class TodoListViewController: SwipeTableViewController {
         }
     
         alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
+            alertTextField.placeholder = Constants.TodoList.createNewItem
         }
         
         alert.addAction(action)

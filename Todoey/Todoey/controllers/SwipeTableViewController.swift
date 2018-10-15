@@ -14,7 +14,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier:"Cell")
+        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier:Constants.cellIdentificer)
         tableView.rowHeight = 80.0
         tableView.separatorStyle = .none
 
@@ -30,7 +30,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SwipeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentificer, for: indexPath) as! SwipeTableViewCell
         cell.delegate = self
         return cell
 
@@ -39,7 +39,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
         guard orientation == .right else { return nil }
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+        let deleteAction = SwipeAction(style: .destructive, title: Constants.delete) { action, indexPath in
             self.updateModel(at: indexPath)
         }
         

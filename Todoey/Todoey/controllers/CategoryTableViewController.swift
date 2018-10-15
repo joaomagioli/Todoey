@@ -35,7 +35,7 @@ class CategoryTableViewController: SwipeTableViewController {
             cell.textLabel?.text = category.name
         } else {
             cell.backgroundColor = UIColor(hexString: "1D9BF6")
-            cell.textLabel?.text = "No categories added"
+            cell.textLabel?.text = Constants.Categories.noCategoriesAdded
         }
         
         return cell
@@ -90,9 +90,9 @@ class CategoryTableViewController: SwipeTableViewController {
     // MARK: - Add category items
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
-        let alert = UIAlertController(title: "Add new category", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: Constants.Categories.addNewCategory , message: Constants.emptyMessage, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+        let action = UIAlertAction(title: Constants.add, style: .default) { (action) in
             
         let newCategory = Category()
             
@@ -110,7 +110,7 @@ class CategoryTableViewController: SwipeTableViewController {
         alert.addAction(action)
         
         alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Add a new category"
+            alertTextField.placeholder = Constants.Categories.addNewCategory
         }
         
         present(alert, animated: true, completion: nil)
